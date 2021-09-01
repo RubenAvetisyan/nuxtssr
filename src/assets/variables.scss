@@ -1,0 +1,19 @@
+// Ref: https://github.com/nuxt-community/vuetify-module#customvariables
+//
+// The variables you want to modify
+
+// Globals
+$color-pack: false !default;
+$body-font-family: 'Merriweather', serif !default;
+$font-size-root: 22px;
+$heading-font-family: 'CyrillicOldBold' !default;
+$card-outlined-border-width: 1px !default;
+$material-light: (
+  'cards': #f2ecea,
+  'text': (
+    'primary': #661a00,
+    'secondary': #522d05,
+  ),
+);
+
+@import '~vuetify/src/styles/styles.sass';

@@ -1,0 +1,8 @@
+import 'core-js/features/object/entries'
+import 'core-js/features/array/includes'
+import 'core-js/features/array/find'
+import 'core-js/features/array/from'
+import 'core-js/es/promise'
+import 'core-js/features/object/assign'
+import 'core-js/es/symbol'
+import 'whatwg-fetch'

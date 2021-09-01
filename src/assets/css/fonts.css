@@ -1,0 +1,43 @@
+/* body {
+    font-family: 'Comfortaa', cursive;
+    font-size: 22px;
+} */
+
+p {
+  font-family: 'Merriweather', serif;
+  font-size: 14px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+  line-height: 20px;
+  font-display: optional
+}
+
+blockquote {
+  font-family: 'Merriweather', serif;
+  font-size: 17px;
+  font-style: normal;
+  font-variant: small-caps;
+  font-weight: 400;
+  line-height: 23px;
+  font-display: optional
+}
+pre {
+  font-family: 'Merriweather', serif;
+  font-size: 11px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+  line-height: 23px;
+  font-display: optional
+}
+
+.small-caps {
+	font-variant: small-caps;
+}
+
+.title-cyrillic--bold {
+  font-family: 'CyrillicOldBold', Arial;
+  font-style: normal;
+  font-display: optional
+}

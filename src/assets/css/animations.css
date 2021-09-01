@@ -1,0 +1,7 @@
+.v-navigation-drawer__content{
+  will-change: transform;
+}
+
+img {
+  aspect-ratio: attr(width) / attr(height);
+}
