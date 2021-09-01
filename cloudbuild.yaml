@@ -1,10 +1,29 @@
 steps:
-- id: docker build
-  name: 'gcr.io/cloud-builder/docker'
-  args: ['build', '--network=cloudbuild', '-t', 'gcr.io/online-shop-324618/server', '.']
-- name: 'gcr.io/cloud-builder/docker'
-  args: ['push', 'gcr.io/online-shop-324618/server']
-- name: 'gcr.io/cloud-builders/gcloud'
-  args: ['run', 'deploy', 'online-shop-324618', '--image', 'gcr.io/online-shop-324618/server', '--region', 'us-central1', '--platform', 'managed', '--allow-unauthenticated']
+  - id: docker build
+    name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'build',
+        '--network=cloudbuild',
+        '-t',
+        'gcr.io/online-shop-324618/server',
+        '.',
+      ]
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/online-shop-324618/server']
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      [
+        'run',
+        'deploy',
+        'online-shop-324618',
+        '--image',
+        'gcr.io/online-shop-324618/server',
+        '--region',
+        'us-central1',
+        '--platform',
+        'managed',
+        '--allow-unauthenticated',
+      ]
 images:
-- 'gcr.io/online-shop-324618/server'
+  - 'gcr.io/online-shop-324618/server'
