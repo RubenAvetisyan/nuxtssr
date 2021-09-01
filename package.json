@@ -42,7 +42,7 @@
     "nuxt-ssr-cache": "^1.5.2",
     "nuxt-webfontloader": "^1.1.0",
     "unsplash-js": "^7.0.15",
-    "v-lazy-image": "^1.4.0",
+    "v-lazy-image": "^2.0.1",
     "vue-lazy-hydration": "^2.0.0-beta.4",
     "vue-unsplash": "^3.1.0",
     "vuetify": "^2.5.5",
