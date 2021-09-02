@@ -57,6 +57,7 @@ module.exports = () => {
         'product-item': productItem,
         top,
       },
+      staticFilename: '[publicPath]/static/[name]',
     },
   }
 }

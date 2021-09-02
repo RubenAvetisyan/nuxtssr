@@ -1,4 +1,5 @@
 <template>
+  <!-- :src="require('~/assets/images/fabric.png')" -->
   <v-navigation-drawer
     v-model="hide"
     :mini-variant="miniVariant && !$vuetify.breakpoint.mobile && !isMobile"
@@ -8,7 +9,7 @@
     :right="!left"
     :expand-on-hover="miniVariant || drawer === false"
     :temporary="$vuetify.breakpoint.mobile && isMobile"
-    :src="require('~/assets/images/fabric.png')"
+    class="nd-background"
     app
   >
     <v-list v-if="!!items.length">
@@ -98,3 +99,10 @@ export default {
   },
 }
 </script>
+
+<style lang="css" scoped>
+.nd-background {
+  background: url('~assets/images/fabric.avif') fixed !important;
+  background-size: cover;
+}
+</style>

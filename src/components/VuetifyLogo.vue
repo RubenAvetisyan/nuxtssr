@@ -1,21 +1,40 @@
 <template>
-  <v-lazy-image
-    class="logo"
+  <!-- <v-img
+    v-cloak
+    :lazy-src="
+      $img('/vuetify-logo.svg', {
+        formats: 'svg',
+        width: 120,
+        quality: 30,
+      })
+    "
+    :src="
+      $img('/vuetify-logo.svg', {
+        formats: 'svg',
+        height: 60,
+        quality: 80,
+        provider: 'static',
+      })
+    "
+    :srcset="_srcset.srcset"
+    :height="167"
+    :sizes="_srcset.size"
+    eager
     alt="Vuetify Logo"
-    src="/vuetify-logo.svg"
-    sizes="(max-width: 180px) 120px"
-    :src-placeholder="require('static/vuetify-logo.svg')"
+    max-width="180"
+    transition="transition-fast-in-fast-out"
+    contain
+    class="logo"
+    style="position: absolute; top: 0; left: 0; width: 100%"
     itemscope
     itemtype="https://schema.org/Service"
     itemprop="logo"
-  ></v-lazy-image>
+  ></v-img> -->
+  <nuxt-picture src="/vuetify-logo.svg" width="120px" sizes="sm:100vw md:50vw lg:120px"></nuxt-picture>
 </template>
 
 <script>
 export default {
-  components: {
-    VLazyImage: () => import(/* webpackChunkName: "v-lazy-image" */ 'v-lazy-image'),
-  },
   head() {
     const baseURL = this.$axios.defaults.baseURL
     return this.$seo({
@@ -27,6 +46,19 @@ export default {
         },
       },
     })
+  },
+  methods: {
+    _srcset() {
+      return this.$img.getSizes(this.imgSrc, {
+        sizes: 'xs:100vw sm:100vw md:100vw lg:100vw xl:100vw',
+        modifiers: {
+          format: 'webp',
+          quality: 80,
+          height: 167,
+          fit: 'outside',
+        },
+      })
+    },
   },
 }
 </script>
@@ -43,13 +75,5 @@ export default {
   100% {
     transform: rotateY(0deg);
   }
-}
-
-.v-lazy-image {
-  opacity: 0;
-  transition: opacity 2s;
-}
-.v-lazy-image-loaded {
-  opacity: 1;
 }
 </style>

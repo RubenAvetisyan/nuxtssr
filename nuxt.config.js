@@ -43,6 +43,8 @@ export default {
   telemetry: false,
   server: {
     port: process.env.PORT || port,
+    host: '0.0.0.0',
+    timing: isDev,
   },
   env: {
     baseUrl: process.env.BASE_URL || 'http://localhost:3000',
@@ -77,10 +79,10 @@ export default {
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
     '@nuxtjs/style-resources',
-    'nuxt-webfontloader',
     'nuxt-purgecss',
     'nuxt-seo',
     '@nuxtjs/robots',
+    '@nuxtjs/sitemap',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -91,7 +93,7 @@ export default {
     'nuxt-polyfill',
     '@luxdamore/nuxt-prune-html',
     '@nuxt/image',
-    '@nuxtjs/sitemap',
+    'nuxt-webfontloader',
   ],
 
   ...nuxtConfigs.hooks,

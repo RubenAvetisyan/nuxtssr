@@ -37,7 +37,7 @@ pre {
 }
 
 .title-cyrillic--bold {
-  font-family: 'CyrillicOldBold', Arial;
+  font-family: 'CyrillicOldBold', Helvetica, Arial, Verdana, Tahoma, sans-serif;
   font-style: normal;
   font-display: optional
 }

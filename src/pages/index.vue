@@ -69,7 +69,6 @@
                 href="https://vuetifyjs.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="white--text"
                 itemprop="url"
               >
                 documentation </a
@@ -82,7 +81,6 @@
                 target="_blank"
                 rel="noopener noreferrer"
                 title="chat"
-                class="white--text"
                 itemprop="url"
               >
                 discord </a
@@ -95,7 +93,7 @@
                 target="_blank"
                 rel="noopener noreferrer"
                 title="contribute"
-                class="white--text"
+
                 itemprop="url"
               >
                 issue board </a
@@ -113,7 +111,6 @@
               href="https://nuxtjs.org/"
               target="_blank"
               rel="noopener noreferrer"
-              class="white--text"
               itemprop="url"
             >
               Nuxt Documentation
@@ -123,7 +120,6 @@
               href="https://github.com/nuxt/nuxt.js"
               target="_blank"
               rel="noopener noreferrer"
-              class="white--text"
               itemprop="url"
             >
               Nuxt GitHub
@@ -182,7 +178,7 @@ export default {
       description:
         'Подарок на века involving legal or law related matters like issue of legal opinion, filing, pleading and defending of law suits etc by a lawyer or attorney practicing law related services.',
       openGraph: {
-        url: 'http://localhost:3000' + this.$nuxt._route.path,
+        url: process.env.baseUrl + this.$nuxt._route.path,
       },
     })
   },

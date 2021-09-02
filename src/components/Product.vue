@@ -4,7 +4,7 @@
       light
       :elevation="h ? 10 : 0"
       :outlined="!h"
-      :img="require('~/assets/images/so-white.png')"
+      :img="require('~/assets/images/so-white.avif')"
       flat
       width="10.4rem"
       height="31.3rem"
@@ -40,7 +40,8 @@
           absolute
           class="mx-0 mt-0 rounded-bl-xl rounded-tl-xl"
           style="right: 0; top: 0; z-index: 1"
-          ><v-icon>{{ mdiStarHalfFull }}</v-icon></v-btn
+          :aria-label="`книга ${item.name.ru} полажить в карзину`"
+          ><v-icon>{{ mdiCartArrowDown }}</v-icon></v-btn
         >
         <!-- <nuxt-img
           :src="imgSrc"
@@ -53,16 +54,16 @@
           v-cloak
           :lazy-src="
             $img(imgSrc, {
-              formats: 'webp',
-              width: 250,
+              height: 167,
               quality: 30,
+              format: 'avif'
             })
           "
           :src="
             $img(imgSrc, {
-              formats: 'webp',
               height: 167,
               quality: 80,
+              format: 'avif'
             })
           "
           :srcset="_srcset.srcset"
@@ -157,7 +158,7 @@
 </template>
 
 <script>
-import { mdiStarOutline, mdiStar, mdiStarHalfFull } from '@mdi/js'
+import { mdiStarOutline, mdiStar, mdiStarHalfFull, mdiCartArrowDown } from '@mdi/js'
 export default {
   props: {
     item: {
@@ -190,6 +191,7 @@ export default {
     mdiStarOutline,
     mdiStar,
     mdiStarHalfFull,
+    mdiCartArrowDown
   }),
   head() {
     return {
@@ -236,7 +238,7 @@ export default {
       return this.$img.getSizes(this.imgSrc, {
         sizes: 'xs:100vw sm:100vw md:100vw lg:100vw xl:100vw',
         modifiers: {
-          format: 'webp',
+          format: 'avif',
           quality: 80,
           height: 167,
           fit: 'outside',
@@ -262,6 +264,6 @@ export default {
 
 <style scoped>
 .product {
-  background-image: url('~/assets/images/fabric.png');
+  background-image: url('~/assets/images/fabric.avif');
 }
 </style>

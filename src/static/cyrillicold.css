@@ -1,9 +1,9 @@
 @font-face {
 			font-family: "CyrillicOldBold";
-			src: url("http://localhost:3000/fonts/CyrillicOldBold.eot");
-			src: url("http://localhost:3000/fonts/CyrillicOldBold.eot?#iefix") format("embedded-opentype"),
-			url("http://localhost:3000/fonts/CyrillicOldBold.woff") format("woff"),
-			url("http://localhost:3000/fonts/CyrillicOldBold.ttf") format("truetype");
+			src: url("/fonts/CyrillicOldBold.eot");
+			src: url("/fonts/CyrillicOldBold.eot?#iefix") format("embedded-opentype"),
+			url("/fonts/CyrillicOldBold.woff") format("woff"),
+			url("/fonts/CyrillicOldBold.ttf") format("truetype");
 			font-style: normal;
 			font-weight: normal;
 	}

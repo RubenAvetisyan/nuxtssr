@@ -121,8 +121,6 @@ export default {
     LazyHydrate,
     AppBarBtn: () => import('../components/AppBarBtn.vue'),
     Drawer: () => import('../components/Drawer.vue'),
-    // VLazyImage: () =>
-    //   import(/* webpackChunkName: "v-lazy-image" */ 'v-lazy-image'),
   },
   data() {
     return {
@@ -175,7 +173,7 @@ export default {
         language: 'ru',
         lang: 'ru',
         charset: 'utf-8',
-        canonical: baseURL + $route.path,
+        canonical: $route.path,
         name: this.name,
         title: this.title,
         templateTitle: '%name% - podarok-na-veka',
@@ -347,7 +345,7 @@ body {
 }
 
 #app {
-  background: url('/white_leather.png') fixed !important;
+  background: url('/white_leather.avif') fixed !important;
   background-size: cover;
 }
 
@@ -362,12 +360,4 @@ body {
   text-overflow: ellipsis;
   white-space: nowrap;
 } */
-
-.v-lazy-image {
-  opacity: 0;
-  transition: opacity 1s;
-}
-.v-lazy-image-loaded {
-  opacity: 1;
-}
 </style>

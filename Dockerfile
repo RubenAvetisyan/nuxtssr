@@ -1,5 +1,7 @@
 FROM node:14
 
+ARG BUILD_ENV
+
 WORKDIR /usr/src/app
 
 COPY . ./
