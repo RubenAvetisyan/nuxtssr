@@ -12,11 +12,12 @@
       v-show="drawer !== undefined && drawer !== null"
       :clipped-left="clipped"
       fixed
-      :height="!$vuetify.breakpoint.smAndDown ? 128 : 64"
+      :src="require('~/assets/images/top.webp').default"
+      :height="topHeight"
       :class="{ left: drawer && !clipped && !miniVariant }"
       app
     >
-      <template #img="">
+      <!-- <template #img="">
         <v-img
           :contenteditable="false"
           :draggable="false"
@@ -34,8 +35,7 @@
           itemscope
           itemprop="image"
         ></v-img>
-        <!-- <nuxt-img src="/top.webp" preset="top" /> -->
-      </template>
+      </template> -->
       <v-responsive
         max-height="64px"
         :max-width="!$vuetify.breakpoint.smAndDown ? 256 - 16 : null"
@@ -54,7 +54,18 @@
         content-class="text-center justify-center align-center"
         class="ma-0"
       >
-        <v-img
+        <nuxt-img
+          src="/logo-dark.webp"
+          :height="topHeight - 8"
+          :draggable="false"
+          :contenteditable="false"
+          alt="Подарок на века Logo"
+          loading="lazy"
+          itemscope
+          itemtype="https://schema.org/Service"
+          itemprop="logo"
+        />
+        <!-- <v-img
           id="logo"
           :contenteditable="false"
           :draggable="false"
@@ -74,7 +85,7 @@
           max-width="20.31rem"
           max-height="11.25rem"
           class="logo mb-0"
-        ></v-img>
+        ></v-img> -->
       </v-responsive>
       <v-responsive max-height="64px" :max-width="48">
         <AppBarBtn
@@ -116,6 +127,7 @@ import {
   mdiApps,
   mdiChartBubble,
 } from '@mdi/js'
+const { parseURL } = require('ufo')
 export default {
   components: {
     LazyHydrate,
@@ -164,7 +176,7 @@ export default {
     }
   },
   head(ctx) {
-    const { $route } = ctx
+    const { $route, headProps, name, description, title } = ctx
     const baseURL = process.env.baseUrl
     return {
       ...this.$seo({
@@ -173,35 +185,35 @@ export default {
         language: 'ru',
         lang: 'ru',
         charset: 'utf-8',
-        canonical: $route.path,
-        name: this.name,
-        title: this.title,
+        canonical: baseURL + $route.path,
+        name,
+        title,
         templateTitle: '%name% - podarok-na-veka',
-        description: this.description,
+        description,
         image: {
-          url: baseURL + 'og-image.jgp',
-          alt: this.name,
+          url: headProps.ogImage,
+          alt: name + ' og image',
           width: 1200,
           height: 574,
         },
         og: {
           image: {
-            url: baseURL + 'og-image.jgp',
-            alt: this.name,
+            url: headProps.ogImage,
+            alt: name + ' og image',
             width: 1200,
             height: 574,
           },
-          description: this.description,
+          description,
         },
         openGraph: {
           url: '',
           locale: 'ru',
           type: 'website',
-          site_name: this.name,
-          description: this.description,
+          site_name: name,
+          description,
           image: {
-            url: baseURL + 'og-image.jpg',
-            alt: this.name,
+            url: headProps.ogImage,
+            alt: name + ' og image',
             width: 1200,
             height: 574,
           },
@@ -214,12 +226,12 @@ export default {
           json: {
             '@context': 'https://schema.org/',
             '@type': 'Organization',
-            name: this.name,
-            description: '',
-            url: baseURL,
-            email: baseURL,
+            name,
+            description,
+            url: baseURL + '/',
+            email: headProps.email,
             legalName: 'Organization',
-            logo: baseURL + 'logo.png',
+            logo: headProps.logo,
             address: {
               '@type': 'postalAddress',
               addressCountry: 'Ru',
@@ -241,10 +253,6 @@ export default {
     }
   },
   computed: {
-    baseURL() {
-      return this.$axios.defaults.baseURL
-    },
-
     drawer() {
       return this.getDrawerProp('drawer')
     },
@@ -253,6 +261,20 @@ export default {
     },
     fixed() {
       return this.getDrawerProp('fixed')
+    },
+    topHeight() {
+      return this.$vuetify.breakpoint.smAndDown ? 64 : 128
+    },
+    headProps() {
+      const baseURL = process.env.baseUrl
+
+      return {
+        logo: baseURL + '/logo.png',
+        ogImage: baseURL + '/og-image.jgp',
+        email:
+          'info@' +
+          parseURL('https://online-shop-324618-bpyxxgs6la-uc.a.run.app').host,
+      }
     },
   },
   methods: {
@@ -329,7 +351,7 @@ export default {
         modifiers: modifiers[preset] || {},
         // options: { preset },
       })
-      // console.log('result: ', result)
+      //
       return result
     },
   },

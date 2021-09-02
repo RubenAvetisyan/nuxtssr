@@ -4,7 +4,7 @@
       light
       :elevation="h ? 10 : 0"
       :outlined="!h"
-      :img="require('~/assets/images/so-white.avif')"
+      :img="cardBackground"
       flat
       width="10.4rem"
       height="31.3rem"
@@ -24,7 +24,6 @@
       :itemid="item.model"
     >
       <v-responsive
-        :aspect-ratio="250 / 167"
         :height="167"
         :max-height="167"
         class="fill-height white"
@@ -43,14 +42,16 @@
           :aria-label="`книга ${item.name.ru} полажить в карзину`"
           ><v-icon>{{ mdiCartArrowDown }}</v-icon></v-btn
         >
-        <!-- <nuxt-img
+        <nuxt-img
           :src="imgSrc"
-          size="xs: 11vw sm:11vw md:11vw lg:11vw xl:11vw"
-          height="167px"
+          format="webp"
+          height="167"
+          loading="lazy"
+          :size="size"
           class="transition-fast-in-fast-out"
-        /> -->
+        />
 
-        <v-img
+        <!-- <v-img
           v-cloak
           :lazy-src="
             $img(imgSrc, {
@@ -78,7 +79,7 @@
           transition="transition-fast-in-fast-out"
           contain
           style="position: absolute; top: 0; left: 0; width: 100%"
-        ></v-img>
+        ></v-img> -->
       </v-responsive>
 
       <v-divider></v-divider>
@@ -158,7 +159,12 @@
 </template>
 
 <script>
-import { mdiStarOutline, mdiStar, mdiStarHalfFull, mdiCartArrowDown } from '@mdi/js'
+import {
+  mdiStarOutline,
+  mdiStar,
+  mdiStarHalfFull,
+  mdiCartArrowDown,
+} from '@mdi/js'
 export default {
   props: {
     item: {
@@ -177,7 +183,7 @@ export default {
           // const imgHasMainImage = hasKay('mainImage')
           return hasKay // && imgHasMainImage
         } catch (error) {
-          // console.error('error: ', error)
+          //
         }
       },
     },
@@ -191,9 +197,9 @@ export default {
     mdiStarOutline,
     mdiStar,
     mdiStarHalfFull,
-    mdiCartArrowDown
+    mdiCartArrowDown,
   }),
-  head() {
+  head({ imgSrc, item }) {
     return {
       script: [
         {
@@ -201,23 +207,31 @@ export default {
           json: {
             '@context': 'https://schema.org/',
             '@type': 'Product',
-            name: this.item.name.ru,
-            image: this.$axios.defaults.baseURL + this.item.img.mainImage,
-            description: this.item.metaDescription.ru,
+            name: item.name.ru,
+            image: imgSrc,
+            sku: item.model,
+            review: '',
+            ISBN: '',
+            brand: '',
+            description: item.metaDescription.ru,
             offers: {
               '@type': 'Offer',
-              url: this.$axios.defaults.baseURL + 'государева-служба',
+              sku: item.model,
+              review: '',
+              ISBN: '',
+              brand: '',
+              url: process.env.baseUrl + '/государева-служба',
               priceCurrency: 'RUB',
-              price: this.item.price,
+              price: item.price,
               availability: 'https://schema.org/InStock',
               itemCondition: 'https://schema.org/NewCondition',
             },
             aggregateRating: {
               '@type': 'AggregateRating',
-              ratingValue: this.item.points,
-              bestRating: '5',
-              worstRating: '1',
-              ratingCount: !this.item.points ? '0' : '9',
+              ratingValue: item.points || 5,
+              bestRating: 5,
+              worstRating: 5,
+              ratingCount: !item.points ? 1 : 9,
             },
           },
           pbody: true,
@@ -226,20 +240,43 @@ export default {
     }
   },
   computed: {
+    cardBackground() {
+      const picture = require('~/assets/images/so-white.avif').default
+
+      return picture
+    },
     imgSrc() {
       return `/pvn/${this.item.img.mainImage}`
+    },
+    size() {
+      return this.getVw(227)
     },
   },
   mounted() {
     this.setDivider()
   },
   methods: {
+    getVw(width) {
+      const result = []
+      const screens = {
+        xs: 320,
+        sm: 640,
+        md: 768,
+        lg: 1024,
+        xl: 1280,
+        xxl: 1536,
+        '2xl': 1920,
+      }
+      for (const size in screens) {
+        result.push(`${size}:${Math.ceil((width / screens[size]) * 100)}vw`)
+      }
+      return result.join(' ')
+    },
     _srcset() {
       return this.$img.getSizes(this.imgSrc, {
         sizes: 'xs:100vw sm:100vw md:100vw lg:100vw xl:100vw',
         modifiers: {
-          format: 'avif',
-          quality: 80,
+          format: 'webp',
           height: 167,
           fit: 'outside',
         },

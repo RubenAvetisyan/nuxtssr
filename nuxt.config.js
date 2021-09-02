@@ -47,9 +47,11 @@ export default {
     timing: isDev,
   },
   env: {
-    baseUrl: process.env.BASE_URL || 'http://localhost:3000',
+    baseUrl:
+      process.env.BASE_URL ||
+      'https://online-shop-324618-bpyxxgs6la-uc.a.run.app',
   },
-  watch: ['~/nuxt-configs/**/*.js', '~/src/**/*.js'],
+  watch: ['./nuxt-configs/**/*.js', './src/**/*.js'],
   modern: false, //! isDev,
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: nuxtConfigs.head,
@@ -178,7 +180,7 @@ export default {
       config.plugins.unshift(new LodashModuleReplacementPlugin())
       config.module.rules[2].use[0].options.plugins = ['lodash']
 
-      const ORIGINAL_TEST = '/\\.(png|jpe?g|gif|svg|webp)$/i'
+      const ORIGINAL_TEST = '/\\.(png|jpe?g|gif|svg|webp|avif)$/i'
 
       // config.plugins.push(new VuetifyLoaderPlugin())
 
@@ -211,7 +213,7 @@ export default {
 
       config.module.rules.forEach((rule) => {
         if (rule.test.toString() === ORIGINAL_TEST) {
-          rule.test = /\.(png|jpe?g|gif|webp)$/i
+          rule.test = /\.(png|jpe?g|gif|webp|avif)$/i
           // console.log(
           //   'nuxtConfigs.loaders.url-loader: ',
           //   nuxtConfigs.loaders['url-loader']('options', 100, 'img')
