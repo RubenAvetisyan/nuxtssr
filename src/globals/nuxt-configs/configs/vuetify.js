@@ -63,7 +63,7 @@ module.exports = (isDev) => {
         },
       },
     },
-    treeShake: true,
+    treeShake: !isDev,
     // {
     //   components: [
     //     'VApp',

@@ -6,6 +6,9 @@ const configs = inject({
 })
 
 const isDev = process.env.NODE_ENV !== 'production'
+const baseUrl = isDev
+  ? 'http://127.0.0.1:3000'
+  : 'https://online-shop-324618-bpyxxgs6la-uc.a.run.app'
 
 const configObjects = {
   styleResources: {
@@ -21,11 +24,6 @@ const configObjects = {
     '~/assets/scss/styles.scss',
     // '~/assets/scss/main.scss',
   ],
-  server: {
-    timing: {
-      total: true,
-    },
-  },
   transpile: [
     'vue-lazy-hydration',
     // 'vue2-filters',
@@ -39,7 +37,9 @@ const configObjects = {
 
 for (const name in configs) {
   configObjects[name] =
-    configs[name] instanceof Function ? configs[name](isDev) : configs[name]
+    configs[name] instanceof Function
+      ? configs[name](isDev, baseUrl)
+      : configs[name]
   // console.log(`${name}: `, configObjects[name])
 }
 module.exports = configObjects

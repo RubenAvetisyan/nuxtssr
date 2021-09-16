@@ -1,6 +1,22 @@
-const express = require('express')
-const helmet = require('helmet')
-const app = express()
+/* eslint-disable no-console */
+import { cleanDoubleSlashes, normalizeURL } from 'ufo'
+import express from 'express'
+import {
+  dnsPrefetchControl,
+  expectCt,
+  frameguard,
+  hidePoweredBy,
+  hsts,
+  ieNoOpen,
+  noSniff,
+  permittedCrossDomainPolicies,
+  referrerPolicy,
+  xssFilter,
+} from 'helmet'
+
+const getExpress = () => express()
+
+const app = getExpress()
 // require('@google-cloud/profiler').start({
 //   serviceContext: {
 //     service: 'cloudprofiler.googleapis.com',
@@ -8,21 +24,31 @@ const app = express()
 //   },
 // })
 
-app.use(helmet.dnsPrefetchControl())
-app.use(helmet.expectCt())
-app.use(helmet.frameguard())
-app.use(helmet.hidePoweredBy())
-app.use(helmet.hsts())
-app.use(helmet.ieNoOpen())
-app.use(helmet.noSniff())
-app.use(helmet.permittedCrossDomainPolicies())
-app.use(helmet.referrerPolicy())
-app.use(helmet.xssFilter())
+app.use(dnsPrefetchControl())
+app.use(expectCt())
+app.use(frameguard())
+app.use(hidePoweredBy())
+app.use(hsts())
+app.use(ieNoOpen())
+app.use(noSniff())
+app.use(permittedCrossDomainPolicies())
+app.use(referrerPolicy())
+app.use(xssFilter())
 
-app.get('*', (req, res, next) => {
-  res.status(302).redirect(`${req.protocol}://${req.hostname}:3000/`)
-
+app.all('*', (req, res, next) => {
+  const env = process.env.NODE_ENV
+  const url = 'http://' + req.headers.host.replace(/^www\./, '') + req.url
+  console.log('url: ', url)
+  const normalizedURL = normalizeURL(cleanDoubleSlashes(url))
+  console.log('normalizedURL: ', normalizedURL)
+  if (env === 'production' && req.headers.host.match(/^www/) !== null) {
+    res.writeHead(301, { Location: normalizedURL })
+    res.end()
+  }
   next()
 })
 
-module.exports = app
+module.exports = {
+  path: '/',
+  handler: app,
+}

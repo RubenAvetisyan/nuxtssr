@@ -1,3 +1,4 @@
+.vscode
 .git
 .cache
 .nuxt
@@ -6,3 +7,7 @@
 .github
 node_modules
 *.md
+moch.txt
+Dockerfile
+npm-debug*
+src/utils/data/**

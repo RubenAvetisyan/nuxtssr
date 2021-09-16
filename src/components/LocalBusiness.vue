@@ -22,9 +22,11 @@
         <p>openingHours:</p>
         <li v-for="(el, i) in structuredDataForTags.openingHours" :key="i">
           Open:
-          <span itemprop="openingHours" :content="el.replace(' ', ', ')">{{
-            el
-          }}</span>
+          <span
+            itemprop="openingHours"
+            :content="replaceTheString(el, /\s/ ,', ')"
+            >{{ el }}</span
+          >
         </li>
       </ul>
     </div>
@@ -32,6 +34,7 @@
 </template>
 
 <script>
+const { parseURL } = require('ufo')
 export default {
   props: {
     name: { type: String, default: '' },
@@ -59,7 +62,7 @@ export default {
   },
   computed: {
     baseUrl() {
-      return this.$axios.defaults.baseURL
+      return process.env.baseUrl
     },
     oh() {
       const { mo, tu, we, th, fr, sa, su } = this
@@ -73,12 +76,6 @@ export default {
         su && `Su ${su}`,
       ].filter((el) => el !== '')
       return result
-    },
-    domain() {
-      return this.baseUrl
-        .replace('http://', '')
-        .replace('https://', '')
-        .replace('/', '')
     },
     itemLE() {
       return this.itemListElement.length
@@ -100,27 +97,35 @@ export default {
         itemListElement: this.itemLE,
       }
     },
-    main() {
+    main({ $route, baseUrl, description }) {
       return {
         '@context': 'http://www.schema.org',
         '@type': 'ProfessionalService',
         name: 'Подарок на века',
-        url: this.baseUrl,
-        logo: 'Подарок на века logo',
+        url: baseUrl + $route.path,
+        logo: baseUrl + '/logo.avif',
         priceRange: '$$',
         paymentAccepted: 'Cash, Credit Card',
-        image: this.baseUrl + 'logo.svg',
-        description: this.description,
+        image: baseUrl + '/logo.avif',
+        description,
         address: {
-          '@type': 'PostalAddress',
-          streetAddress: '73 1985',
-          addressLocality: 'Los Angeles',
-          addressRegion: 'CA',
-          postalCode: '93785',
-          addressCountry: 'USA',
+          '@type': 'postalAddress',
+          addressCountry: 'Ru',
+          addressLocality: 'Москва',
+          addressRegion: 'Московский Область',
+          postalCode: '',
+          streetAddress: 'Комсомольская пл. д. 1а',
+          telephone: '+8-926-266-71-98',
+          sameAs: [
+            'https://instagram.com/podaroknaveka',
+            'https://www.facebook.com/podaroknaveka/',
+            'https://vk.com/podaroknaveka',
+          ],
         },
         telephone: '+1 (300) 500-05000',
-        email: `mailto:info@${this.domain}`,
+        email:
+          'mailto:info@' +
+          parseURL('https://online-shop-324618-bpyxxgs6la-uc.a.run.app').host,
       }
     },
     structuredDataForTags() {
@@ -139,5 +144,10 @@ export default {
       return result
     },
   },
+  methods: {
+    replaceTheString(string, within, replaceTo) {
+      string.replaceAll(within, replaceTo)
+    }
+  }
 }
 </script>

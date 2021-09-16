@@ -1,11 +1,17 @@
+/* eslint-disable no-console */
 import LodashModuleReplacementPlugin from 'lodash-webpack-plugin'
 // import VuetifyLoaderPlugin from 'vuetify-loader/lib/plugin'
-import nuxtConfigs from './nuxt-configs/index'
+import nuxtConfigs from './src/globals/nuxt-configs/index'
 
 const isDev = process.env.NODE_ENV !== 'production'
+console.log('process.env.NODE_ENV: ', process.env.NODE_ENV)
+console.log('isDev: ', isDev)
 let last = []
 
-const port = isDev ? 3000 : 8080
+const port = isDev
+  ? process.env.NUXT_PORT || 3000
+  : process.env.NUXT_PORT || 8080
+const baseUrl = nuxtConfigs.baseUrl
 
 if (isDev) {
   setInterval(() => {
@@ -43,14 +49,14 @@ export default {
   telemetry: false,
   server: {
     port: process.env.PORT || port,
-    host: '0.0.0.0',
+    host: process.env.HOST || process.env.NUXT_HOST || '0.0.0.0',
     timing: isDev,
   },
   env: {
-    baseUrl: process.env.BASE_URL || 'http://localhost:3000',
+    baseUrl: process.env.BASE_URL || baseUrl,
   },
-  watch: ['~/nuxt-configs/**/*.js', '~/src/**/*.js'],
-  modern: false, //! isDev,
+  watch: ['~/globals/nuxt-configs/**/*.js'],
+  modern: !isDev,
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: nuxtConfigs.head,
   webfontloader: nuxtConfigs.webfontloader,
@@ -80,9 +86,7 @@ export default {
     '@nuxtjs/vuetify',
     '@nuxtjs/style-resources',
     'nuxt-purgecss',
-    'nuxt-seo',
     '@nuxtjs/robots',
-    '@nuxtjs/sitemap',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -94,6 +98,8 @@ export default {
     '@luxdamore/nuxt-prune-html',
     '@nuxt/image',
     'nuxt-webfontloader',
+    'nuxt-seo',
+    '@nuxtjs/sitemap',
   ],
 
   ...nuxtConfigs.hooks,
@@ -109,9 +115,15 @@ export default {
   robots: nuxtConfigs.robots,
   ...nuxtConfigs.sitemap,
 
-  serverMiddleware: {
-    '/_ipx': '~/server-middleware/ipx.js',
-    '/v1': '~/server-middleware/index.js',
+  serverMiddleware: [
+    { path: '/_ipx', handler: '~/server-middleware/ipx.js' },
+    '~/server-middleware/index.js',
+  ],
+
+  router: {
+    base: process.env.baseUrl,
+    middleware: ['is-mobile'],
+    trailingSlash: false,
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -178,7 +190,7 @@ export default {
       config.plugins.unshift(new LodashModuleReplacementPlugin())
       config.module.rules[2].use[0].options.plugins = ['lodash']
 
-      const ORIGINAL_TEST = '/\\.(png|jpe?g|gif|svg|webp)$/i'
+      const ORIGINAL_TEST = '/\\.(png|jpe?g|gif|svg|webp|avif)$/i'
 
       // config.plugins.push(new VuetifyLoaderPlugin())
 
@@ -211,7 +223,7 @@ export default {
 
       config.module.rules.forEach((rule) => {
         if (rule.test.toString() === ORIGINAL_TEST) {
-          rule.test = /\.(png|jpe?g|gif|webp)$/i
+          rule.test = /\.(png|jpe?g|gif|webp|avif)$/i
           // console.log(
           //   'nuxtConfigs.loaders.url-loader: ',
           //   nuxtConfigs.loaders['url-loader']('options', 100, 'img')

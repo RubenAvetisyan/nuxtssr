@@ -21,5 +21,13 @@ export default {
     VuetifyLogo: () => import('../components/VuetifyLogo.vue'),
     LocalBusiness: () => import('../components/LocalBusiness.vue'),
   },
+  head () {
+    return {
+      ...this.$seo({
+        name: 'О нас',
+        templateTitle: '%name% - Подарок на века',
+      })
+    }
+  },
 }
 </script>

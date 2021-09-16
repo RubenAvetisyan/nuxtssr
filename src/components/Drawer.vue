@@ -9,6 +9,7 @@
     :right="!left"
     :expand-on-hover="miniVariant || drawer === false"
     :temporary="$vuetify.breakpoint.mobile && isMobile"
+    color="#fff"
     class="nd-background"
     app
   >

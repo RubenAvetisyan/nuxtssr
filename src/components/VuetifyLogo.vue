@@ -1,60 +1,58 @@
 <template>
   <!-- <v-img
     v-cloak
-    :lazy-src="
-      $img('/vuetify-logo.svg', {
-        formats: 'svg',
-        width: 120,
-        quality: 30,
-      })
-    "
-    :src="
-      $img('/vuetify-logo.svg', {
-        formats: 'svg',
-        height: 60,
-        quality: 80,
-        provider: 'static',
-      })
-    "
+    :lazy-src="imgSrc"
+    :src="imgSrc"
     :srcset="_srcset.srcset"
-    :height="167"
     :sizes="_srcset.size"
     eager
     alt="Vuetify Logo"
     max-width="180"
     transition="transition-fast-in-fast-out"
     contain
-    class="logo"
-    style="position: absolute; top: 0; left: 0; width: 100%"
     itemscope
     itemtype="https://schema.org/Service"
     itemprop="logo"
   ></v-img> -->
-  <nuxt-picture src="/vuetify-logo.svg" width="120px" sizes="sm:100vw md:50vw lg:120px"></nuxt-picture>
+  <!-- <v-img :src="require('~/assets/images/logo.avif').default"></v-img> -->
+  <nuxt-picture
+    src="/logo-stamp.webp"
+    height="142px"
+    loading="lazy"
+    sizes="xs:37px md:137px"
+    fit="contain"
+    alt="Подарок на века логотип"
+  ></nuxt-picture>
 </template>
 
 <script>
 export default {
   head() {
-    const baseURL = this.$axios.defaults.baseURL
+    const baseURL = process.env.baseURL
     return this.$seo({
       openGraph: {
         image: {
-          url: baseURL + 'vuetify-logo.svg',
+          url: baseURL + '/logo-stamp.webp',
           width: '180px',
-          alt: 'Vuetify Logo',
+          alt: 'логотип Подарок на века',
         },
       },
     })
   },
+  computed: {
+    imgSrc() {
+      const src = require('~/static/logo.avif').default
+      return src
+    },
+  },
   methods: {
     _srcset() {
       return this.$img.getSizes(this.imgSrc, {
-        sizes: 'xs:100vw sm:100vw md:100vw lg:100vw xl:100vw',
+        sizes: 'xs:90vw sm:90w md:20vw lg:10vw xl:7vw',
         modifiers: {
-          format: 'webp',
+          format: 'avif',
           quality: 80,
-          height: 167,
+          height: 137,
           fit: 'outside',
         },
       })
@@ -64,12 +62,12 @@ export default {
 </script>
 
 <style scoped>
-.logo {
+/* .logo {
   height: 180px;
   width: 180px;
   transform: rotateY(560deg);
   animation: turn 3.5s ease-out forwards 1s;
-}
+} */
 
 @keyframes turn {
   100% {

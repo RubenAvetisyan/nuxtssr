@@ -6,7 +6,15 @@ module.exports = () => {
     lg: 1024,
     xl: 1280,
     xxl: 1536,
-    '2xl': 1536,
+    '2xl': 1920,
+  }
+
+  const getVw = (width) => {
+    const result = []
+    for (const size in screens) {
+      result.push(`${size}:${Math.ceil((width / screens[size]) * 100)}`)
+    }
+    return result.join(' ')
   }
 
   const avatar = {
@@ -27,11 +35,11 @@ module.exports = () => {
   }
   const productItem = {
     modifiers: {
-      fit: 'contain',
-      format: 'webp',
-      width: 210,
-      height: 167,
-      sizes: 'xs: 20vw sm:25vw md:50vw lg:75vw xl:100vw',
+      // fit: 'contain',
+      format: 'avif',
+      // width: 210,
+      // height: 167,
+      sizes: getVw(227),
     },
   }
 
