@@ -42,7 +42,7 @@
           :aria-label="`книга ${item.name.ru} полажить в карзину`"
           ><v-icon>{{ mdiCartArrowDown }}</v-icon></v-btn
         >
-        <!-- <nuxt-img
+        <nuxt-img
           :src="imgSrc"
           format="webp"
           height="167"
@@ -56,9 +56,9 @@
           :itemid="item.model"
           :itemref="`refs-${item.model}`"
           class="transition-fast-in-fast-out"
-        /> -->
+        />
 
-        <v-img
+        <!-- <v-img
           v-cloak
           :lazy-src="imgSrc"
           :src="imgSrc"
@@ -74,7 +74,7 @@
           transition="transition-fast-in-fast-out"
           contain
           style="position: absolute; top: 0; left: 0; width: 100%"
-        ></v-img>
+        ></v-img> -->
       </v-responsive>
 
       <v-divider></v-divider>
