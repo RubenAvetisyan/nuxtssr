@@ -46,7 +46,7 @@
     "whatwg-fetch": "3.6.2"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "7.15.4",
+    "@babel/eslint-parser": "7.15.8",
     "@babel/preset-env": "7.15.6",
     "@commitlint/cli": "13.1.0",
     "@commitlint/config-conventional": "13.1.0",
