@@ -51,7 +51,7 @@
     "@commitlint/cli": "13.1.0",
     "@commitlint/config-conventional": "13.1.0",
     "@fullhuman/postcss-purgecss": "4.0.3",
-    "@mdi/js": "6.1.95",
+    "@mdi/js": "7.1.96",
     "@nuxt/image": "0.6.0",
     "@nuxtjs/eslint-config": "6.0.1",
     "@nuxtjs/eslint-module": "3.0.2",
